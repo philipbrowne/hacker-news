@@ -32,8 +32,8 @@
         <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
       </div>
       <div class="main-nav-links hidden"> | <a class="nav-link" href="#" id="nav-submit">submit</a> | <a
-          class="nav-link" href="#" id="nav-favorites">favorites</a> | <a class="nav-link" href="#"
-          id="nav-my-stories">my stories</a> | </div>
+          class="nav-link" href="#" id="nav-favorites">favorites</a> | <a class="nav-link" href="#" id="nav-stories">my
+          stories</a> | </div>
       <div class="nav-right">
         <a class="nav-link" href="#" id="nav-login">login/signup</a>
         <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -42,14 +42,14 @@
     </nav>
     <!-- area for stories (all stories, user stories, favorites) -->
     <section class="stories-container container">
-      <!-- Area for submitting new story -->
-      <form id="submit-form" class="">
+      <!-- Form for submitting new story -->
+      <form id="submit-form" class="hidden">
         <div><label for="">author</label><input type="text" name="create-author" id="create-author"
-            placeholder="author name"></div>
+            placeholder="author name" required></div>
         <div><label for="">title</label><input type="text" name="create-title" id="create-title"
-            placeholder="story title">
+            placeholder="story title" required>
         </div>
-        <div><label for="">url</label><input type="text" name="create-url" id="create-url" placeholder="story url">
+        <div><label for="">url</label><input type="url" name="create-url" id="create-url" placeholder="story url">
         </div>
         <button type="submit">submit</button>
         <hr>
@@ -57,16 +57,25 @@
       <!-- loading message (removed by JS after stories loaded) -->
       <div id="stories-loading-msg">Loading&hellip;</div>
       <!-- List of all stories -->
-      <ol id="all-stories-list" class="stories-list"></ol>
+      <ol id="all-stories-list" class="stories-list">
+      </ol>
+      <!-- List of favorite stories - currently hardcoded into DOM -->
+      <ol id="favorited-stories" class="stories-list hidden">
+        <li id="storyID" class="stories-list"><span class="star"><i class="fa-star fas"></i></span><a
+            href="http://www.google.com" target="a_blank" class="story-link"> google that stuff pls </a><small
+            class="story-hostname">(hostname.com)</small><small class="story-author">by bailey</small><small
+            class="story-user">posted by doglovr86</small></li>
+      </ol>
+      <!-- List of Stories Created By User -->
     </section>
     <!-- Login and signup forms -->
     <section class="account-forms-container container">
       <!-- Login form -->
-      <form action="#" id="login-form" class="account-form hidden" method="post">
+      <form action="#" id="login-form" class="submit-form hidden" method="post">
         <h4>Login</h4>
         <div class="login-input">
           <label for="login-username">username</label>
-          <input id="login-username" autocomplete="current-username">
+          <input id="login-username" autocomplete="current-username" required>
         </div>
         <div class="login-input">
           <label for="login-password">password</label>

@@ -46,3 +46,11 @@ function navLogOutClick(evt) {
 }
 
 $navLogOut.on('click', navLogOutClick);
+
+// Display Submit Story Form on click of Submit Link
+
+function displayStorySubmitForm(evt) {
+  console.debug('displayStorySubmit', evt);
+  $submitForm.css('display', 'flex');
+}
+$navSubmit.on('click', displayStorySubmitForm);
