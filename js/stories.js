@@ -25,6 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+      <span class="star"><i class="far fa-star"></i></span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -50,3 +51,26 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+// Gets List of User Favorite Stories, generates HTML, and puts on page
+function putFaveStoriesOnPage() {
+  console.debug('putFaveStoriesOnPage');
+  $;
+}
+
+// Sends Story from $submitForm to Backend API
+async function submitStory(evt) {
+  console.debug('submitStory', evt);
+  evt.preventDefault();
+  const user = currentUser;
+  const newStory = {
+    author: $('#create-author').val(),
+    title: $('#create-title').val(),
+    url: $('#create-url').val(),
+  };
+  await storyList.addStory(user, newStory);
+  storyList = await StoryList.getStories();
+  putStoriesOnPage();
+}
+
+$submitForm.on('submit', submitStory);

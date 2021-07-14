@@ -37,6 +37,10 @@
   display: block;
 }
 
+.star {
+  cursor: pointer;
+}
+
 /* Favorite Stories */
 
 #favorited-stories,

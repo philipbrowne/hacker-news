@@ -23,8 +23,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return 'hostname.com';
+    return new URL(this.url).hostname;
   }
 }
 
@@ -74,11 +73,15 @@ class StoryList {
   async addStory(user, newStory) {
     const token = user.loginToken;
     const username = user.username;
-    const { title, author, url } = newStory;
+    const { title, author, url, storyId } = newStory;
     const res = await axios.post(`${BASE_URL}/stories`, {
       token: user.loginToken,
       story: { author, title, url },
     });
+    const story = new Story(res.data.story);
+    this.stories.unshift(story);
+    user.ownStories.unshift(story);
+    putStoriesOnPage();
     return new Story(res.data.story);
   }
 }
@@ -107,6 +110,40 @@ class User {
 
     // store the login token on the user so it's easy to find for API calls.
     this.loginToken = token;
+  }
+
+  // Add a story to Favorites for User
+
+  async addFavorite(user, story) {
+    const username = user.username;
+    const token = user.loginToken;
+    const { storyId } = story;
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/users/${username}/favorites/${storyId}`,
+        { token }
+      );
+      user.favorites.unshift(story);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  // Remove a Story from User Favorites
+
+  async removeFavorite(user, story) {
+    const username = user.username;
+    const token = user.loginToken;
+    const { storyId } = story;
+    try {
+      const res = await axios.delete(
+        `${BASE_URL}/users/${username}/favorites/${storyId}`,
+        { data: { token } }
+      );
+      user.favorites.splice(user.favorites.indexOf(story), 1);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   /** Register new user in API, make User instance & return it.

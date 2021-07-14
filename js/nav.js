@@ -14,6 +14,13 @@ function navAllStories(evt) {
 
 $body.on('click', '#nav-all', navAllStories);
 
+// Show User's Favorite Stories when user clicks Favorites
+function navFaveStories(evt) {
+  console.debug('navFaveStories', evt);
+  hidePageComponents();
+  putFaveStoriesOnPage();
+}
+
 /** Show login/signup on click on "login" */
 
 function navLoginClick(evt) {
