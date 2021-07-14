@@ -84,6 +84,24 @@ class StoryList {
     putStoriesOnPage();
     return new Story(res.data.story);
   }
+
+  async deleteStory(user, storyId) {
+    const username = user.username;
+    const token = user.loginToken;
+    const res = await axios.delete(`${BASE_URL}/stories/${storyId}`, {
+      data: { token },
+    });
+    for (let i = 0; i < user.ownStories.length; i++) {
+      if (storyId === user.ownStories[i].storyId) {
+        user.ownStories.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < this.stories.length; i++) {
+      if (storyId === this.stories[i].storyId) {
+        this.stories.splice(i, 1);
+      }
+    }
+  }
 }
 
 /******************************************************************************
@@ -140,7 +158,12 @@ class User {
         `${BASE_URL}/users/${username}/favorites/${storyId}`,
         { data: { token } }
       );
-      user.favorites.splice(user.favorites.indexOf(story), 1);
+      for (let i = 0; i < user.favorites.length; i++) {
+        if (storyId === user.favorites[i].storyId) {
+          user.favorites.splice(i, 1);
+        }
+      }
+      // user.favorites.splice(user.favorites.indexOf(story), 1);
     } catch (e) {
       console.log(e);
     }

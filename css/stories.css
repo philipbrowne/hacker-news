@@ -41,10 +41,25 @@
   cursor: pointer;
 }
 
+.fvstar {
+  cursor: pointer;
+}
+
+.userstar {
+  cursor: pointer;
+}
 /* Favorite Stories */
 
 #favorited-stories,
 #my-stories {
   list-style-type: none;
   padding-left: 20px;
+}
+
+.trash {
+  cursor: pointer;
+}
+
+.trash:hover {
+  color: red;
 }

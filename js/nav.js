@@ -16,10 +16,20 @@ $body.on('click', '#nav-all', navAllStories);
 
 // Show User's Favorite Stories when user clicks Favorites
 function navFaveStories(evt) {
-  console.debug('navFaveStories', evt);
   hidePageComponents();
-  putFaveStoriesOnPage();
+  console.debug('navFaveStories', evt);
+  showFaveStories();
 }
+$body.on('click', '#nav-favorites', navFaveStories);
+
+// Show User's Own Stories when user clicks My Stories
+function navUserStories(evt) {
+  hidePageComponents();
+  console.debug('navUserStories', evt);
+  showUserStories();
+}
+
+$body.on('click', '#nav-stories', navUserStories);
 
 /** Show login/signup on click on "login" */
 
@@ -57,7 +67,53 @@ $navLogOut.on('click', navLogOutClick);
 // Display Submit Story Form on click of Submit Link
 
 function displayStorySubmitForm(evt) {
-  console.debug('displayStorySubmit', evt);
+  console.debug('displayStorySubmitForm', evt);
+  hidePageComponents();
   $submitForm.css('display', 'flex');
 }
-$navSubmit.on('click', displayStorySubmitForm);
+$body.on('click', '#nav-submit', displayStorySubmitForm);
+
+// Remove Story by Clicking Trash Icon
+$body.on('click', '.trash', async function () {
+  const storyId = $(this).parent().attr('id').substring(4);
+  await deleteStory(storyId);
+});
+
+// Toggles Favorite Star On
+
+function turnFaveStarOn(storyId) {
+  const star = $(`#${storyId}`).children()[0];
+  $(star).html('<i class="fas fa-star"></i>');
+}
+
+// Toggles Favorite Star Off
+
+function turnFaveStarOff(storyId) {
+  const star = $(`#${storyId}`).children()[0];
+  $(star).html('<i class="far fa-star"></i>');
+}
+
+$body.on('click', '.star', async function () {
+  const storyId = $(this).parent().attr('id');
+  if (!checkFavoritesForStoryId(storyId)) {
+    await addFaveStory(storyId);
+  } else await removeFaveStory(storyId);
+});
+
+$body.on('click', '.fvstar', async function () {
+  const storyId = $(this).parent().attr('id').substr(2);
+  if (!checkFavoritesForStoryId(storyId)) {
+    await addFaveStory(storyId);
+  } else await removeFaveStory(storyId);
+});
+
+$body.on('click', '.userstar', async function () {
+  const storyId = $(this).parent().attr('id').substr(4);
+  if (!checkFavoritesForStoryId(storyId)) {
+    await addFaveStory(storyId);
+    $(this).html('<i class="fas fa-star"></i>');
+  } else {
+    await removeFaveStory(storyId);
+    $(this).html('<i class="far fa-star"></i>');
+  }
+});

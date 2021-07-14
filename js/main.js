@@ -27,7 +27,14 @@ const $navLogOut = $('#nav-logout');
  */
 
 function hidePageComponents() {
-  const components = [$allStoriesList, $loginForm, $signupForm, $submitForm];
+  const components = [
+    $allStoriesList,
+    $loginForm,
+    $signupForm,
+    $submitForm,
+    $faveStoriesList,
+    $userStoriesList,
+  ];
   components.forEach((c) => c.hide());
 }
 
