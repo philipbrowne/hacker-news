@@ -27,8 +27,11 @@ async function login(evt) {
     saveUserCredentialsInLocalStorage();
     updateUIOnUserLogin();
   } catch (e) {
-    alert(`ERROR - ${e}`);
+    // alert(`ERROR - ${e}`);
     console.log(e);
+    if (e.indexOf('401') !== -1) {
+      alert('Invalid Username or Password!');
+    }
   }
 }
 
