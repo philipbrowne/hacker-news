@@ -75,11 +75,14 @@ function putStoriesOnPage() {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
-  for (let story of storyList.stories) {
-    for (let faveStory of currentUser.favorites)
-      if (story.storyId === faveStory.storyId) {
-        turnFaveStarOn(faveStory.storyId);
-      }
+  // Checks to See If User Logged In
+  if (currentUser) {
+    for (let story of storyList.stories) {
+      for (let faveStory of currentUser.favorites)
+        if (story.storyId === faveStory.storyId) {
+          turnFaveStarOn(faveStory.storyId);
+        }
+    }
   }
   $allStoriesList.show();
 }
@@ -132,14 +135,15 @@ function showFaveStories() {
 // Adds Story to Favorites Based on storyID
 async function addFaveStory(storyId) {
   const user = currentUser;
-  try {
-    const story = new Story(await getStoryById(storyId));
-    await user.addFavorite(user, story);
-    turnFaveStarOn(storyId);
-    putFaveStoriesOnPage();
-  } catch (e) {
-    console.log(e);
-  }
+  if (user)
+    try {
+      const story = new Story(await getStoryById(storyId));
+      await user.addFavorite(user, story);
+      turnFaveStarOn(storyId);
+      putFaveStoriesOnPage();
+    } catch (e) {
+      console.log(e);
+    }
 }
 
 // Removes Story from Favorites Based on storyID

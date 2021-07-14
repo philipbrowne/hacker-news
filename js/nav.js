@@ -94,26 +94,38 @@ function turnFaveStarOff(storyId) {
 }
 
 $body.on('click', '.star', async function () {
-  const storyId = $(this).parent().attr('id');
-  if (!checkFavoritesForStoryId(storyId)) {
-    await addFaveStory(storyId);
-  } else await removeFaveStory(storyId);
+  if (currentUser) {
+    const storyId = $(this).parent().attr('id');
+    if (!checkFavoritesForStoryId(storyId)) {
+      await addFaveStory(storyId);
+    } else await removeFaveStory(storyId);
+  } else {
+    alert('Please log in to add a story to favorites');
+  }
 });
 
 $body.on('click', '.fvstar', async function () {
-  const storyId = $(this).parent().attr('id').substr(2);
-  if (!checkFavoritesForStoryId(storyId)) {
-    await addFaveStory(storyId);
-  } else await removeFaveStory(storyId);
+  if (currentUser) {
+    const storyId = $(this).parent().attr('id').substr(2);
+    if (!checkFavoritesForStoryId(storyId)) {
+      await addFaveStory(storyId);
+    } else await removeFaveStory(storyId);
+  } else {
+    alert('Please log in to add a story to favorites');
+  }
 });
 
 $body.on('click', '.userstar', async function () {
-  const storyId = $(this).parent().attr('id').substr(4);
-  if (!checkFavoritesForStoryId(storyId)) {
-    await addFaveStory(storyId);
-    $(this).html('<i class="fas fa-star"></i>');
+  if (currentUser) {
+    const storyId = $(this).parent().attr('id').substr(4);
+    if (!checkFavoritesForStoryId(storyId)) {
+      await addFaveStory(storyId);
+      $(this).html('<i class="fas fa-star"></i>');
+    } else {
+      await removeFaveStory(storyId);
+      $(this).html('<i class="far fa-star"></i>');
+    }
   } else {
-    await removeFaveStory(storyId);
-    $(this).html('<i class="far fa-star"></i>');
+    alert('Please log in to add a story to favorites');
   }
 });

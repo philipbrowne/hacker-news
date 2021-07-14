@@ -28,11 +28,14 @@ async function login(evt) {
     updateUIOnUserLogin();
   } catch (e) {
     // alert(`ERROR - ${e}`);
-    console.log(e);
-    if (e.indexOf('401') !== -1) {
-      alert('Invalid Username or Password!');
-    }
+    if (e.response.status === 401) {
+      alert('Invalid Username or Password - Please try again');
+      console.log(e);
+    } else e;
   }
+  // if (e.indexOf('401') !== -1) {
+  //   alert('Invalid Username or Password!');
+  // }
 }
 
 $loginForm.on('submit', login);
@@ -57,8 +60,12 @@ async function signup(evt) {
 
     $signupForm.trigger('reset');
   } catch (e) {
-    alert(`ERROR - ${e}`);
-    console.log(e);
+    if (e.response.status === 409) {
+      alert('Please choose another Username');
+      console.log(e);
+    } else {
+      console.log(e);
+    }
   }
 }
 
@@ -92,7 +99,11 @@ async function checkForRememberedUser() {
   if (!token || !username) return false;
 
   // try to log in with these credentials (will be null if login failed)
-  currentUser = await User.loginViaStoredCredentials(token, username);
+  try {
+    currentUser = await User.loginViaStoredCredentials(token, username);
+  } catch (e) {
+    alert(`Cannot Login with Stored Credentials - ${e}`);
+  }
 }
 
 /** Sync current user information to localStorage.
