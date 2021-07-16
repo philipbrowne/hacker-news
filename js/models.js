@@ -85,6 +85,8 @@ class StoryList {
     return new Story(res.data.story);
   }
 
+  // Deletes a User's Story both from ownStory list and from All Stories in API by making a Delete Request
+
   async deleteStory(user, storyId) {
     const username = user.username;
     const token = user.loginToken;

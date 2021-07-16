@@ -27,15 +27,12 @@ async function login(evt) {
     saveUserCredentialsInLocalStorage();
     updateUIOnUserLogin();
   } catch (e) {
-    // alert(`ERROR - ${e}`);
+    // Alert if Invalid Credentials
     if (e.response.status === 401) {
       alert('Invalid Username or Password - Please try again');
       console.log(e);
     } else e;
   }
-  // if (e.indexOf('401') !== -1) {
-  //   alert('Invalid Username or Password!');
-  // }
 }
 
 $loginForm.on('submit', login);
@@ -60,6 +57,7 @@ async function signup(evt) {
 
     $signupForm.trigger('reset');
   } catch (e) {
+    // Returns Alert Message if Username already Taken
     if (e.response.status === 409) {
       alert('Please choose another Username');
       console.log(e);

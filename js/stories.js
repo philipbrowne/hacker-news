@@ -35,6 +35,8 @@ function generateStoryMarkup(story) {
     `);
 }
 
+// Similar Function but slightly different Markup for Fave Story - can be refactored later
+
 function generateFaveStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
@@ -49,6 +51,8 @@ function generateFaveStoryMarkup(story) {
       </li>
     `);
 }
+
+// Similar function for userStory but slightly different HTML markup for userStory - can also be refactored later
 
 function generateUserStoryMarkup(story) {
   const hostName = story.getHostName();
@@ -99,6 +103,7 @@ function putFaveStoriesOnPage() {
   }
 }
 
+// Updates List of UserStories
 function putUserStoriesOnPage() {
   console.debug('putUserStoriesOnPage');
   const user = currentUser;
@@ -109,6 +114,7 @@ function putUserStoriesOnPage() {
   }
 }
 
+// Manipulates User Stories Section of DOM
 function showUserStories() {
   $allStoriesList.hide();
   hidePageComponents();
@@ -182,12 +188,14 @@ async function submitStory(evt) {
   }
 }
 
+// Deletes Story and Updates UserStories on Page
 async function deleteStory(storyId) {
   const user = currentUser;
   await storyList.deleteStory(user, storyId);
   showUserStories();
 }
 
+// Checks if StoryID is In Favorites
 function checkFavoritesForStoryId(storyId) {
   for (let story of currentUser.favorites) {
     if (story.storyId === storyId) {
