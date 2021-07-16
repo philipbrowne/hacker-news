@@ -114,6 +114,16 @@ function putUserStoriesOnPage() {
   }
 }
 
+//Shows Favorite Stories
+function showFaveStories() {
+  $allStoriesList.hide();
+  putFaveStoriesOnPage();
+  $faveStoriesList.show();
+  for (let story of currentUser.favorites) {
+    turnFaveStarOn(story.storyId);
+  }
+}
+
 // Manipulates User Stories Section of DOM
 function showUserStories() {
   $allStoriesList.hide();
@@ -125,16 +135,6 @@ function showUserStories() {
       const star = $(`#user${story.storyId}`).children()[1];
       $(star).html('<i class="fas fa-star"></i>');
     }
-  }
-}
-
-//Shows Favorite Stories
-function showFaveStories() {
-  $allStoriesList.hide();
-  putFaveStoriesOnPage();
-  $faveStoriesList.show();
-  for (let story of currentUser.favorites) {
-    turnFaveStarOn(story.storyId);
   }
 }
 

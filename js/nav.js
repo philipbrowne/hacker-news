@@ -64,12 +64,6 @@ function displayStorySubmitForm(evt) {
 }
 $body.on('click', '#nav-submit', displayStorySubmitForm);
 
-// Remove Story in User Stories by Clicking Trash Icon
-$body.on('click', '.trash', async function () {
-  const storyId = $(this).parent().attr('id').substring(4);
-  await deleteStory(storyId);
-});
-
 // Toggles Favorite Star On on M ain Stories Section
 
 function turnFaveStarOn(storyId) {
@@ -123,4 +117,10 @@ $body.on('click', '.userstar', async function () {
   } else {
     alert('Please log in to add a story to favorites');
   }
+});
+
+// Remove Story in User Stories by Clicking Trash Icon
+$body.on('click', '.trash', async function () {
+  const storyId = $(this).parent().attr('id').substring(4);
+  await deleteStory(storyId);
 });
